@@ -33,9 +33,7 @@ set fenc=utf-8
 set termencoding=utf-8
 set fileencodings=utf-8,chinese
 set encoding=utf-8  "if not set, the powerline plugins won't work 
-if has("win32") || has("win64")
-    set fileencoding=chinese
-endif
+set fileencoding=chinese
 set autoindent
 set smartindent
 set tabstop=4        " tab width is 4 spaces
@@ -86,10 +84,9 @@ cnoremap <C-e> <End>
 " config ctags file locations {{{
 set tags+=./tags
 set tags+=~/.vim/tags/cpp
-" let g:ProjTags = [ "~/workspace" ]
-let g:ProjTags = [["~/workspace/cocos2d-html5", "~/.vim/tags/cocos2d-html5/cocos2d/tags", "~/.vim/tags/cocos2d-html5/chipmunk/tags","~/.vim/tags/cocos2d-html5/box2d/tags","~/.vim/tags/cocos2d-html5/CocosDenshion/tags","~/.vim/tags/cocos2d-html5/extensions/tags"]]
-let g:ProjTags += [["~/workspace/cocos2d-x","~/.vim/tags/cocos2d-x/cocos2dx/tags","~/.vim/tags/cocos2d-x/chipmunk/tags","~/.vim/tags/cocos2d-x/Box2d/tags","~/.vim/tags/cocos2d-x/CocosDenshion/tags","~/.vim/tags/cocos2d-x/extensions/tags"]]
-let g:ProjTags += [[ "~/workspace/opencv","~/.vim/tags/opencv/tags" ]]
+let g:ProjTags = [["~/workspace/cocos2d-html5", "~vimfilesfiles//tags/cocos2d-html5/cocos2d/tags", "~/vimfiles/tags/cocos2d-html5/chipmunk/tags","~/vimfiles/tags/cocos2d-html5/box2d/tags","~/vimfiles/tags/cocos2d-html5/CocosDenshion/tags","~/vimfiles/tags/cocos2d-html5/extensions/tags"]]
+let g:ProjTags += [["~/workspace/cocos2d-x","~/vimfiles/tags/cocos2d-x/cocos2dx/tags","~/vimfiles/tags/cocos2d-x/chipmunk/tags","~/vimfiles/tags/cocos2d-x/Box2d/tags","~/vimfiles/tags/cocos2d-x/CocosDenshion/tags","~/vimfiles/tags/cocos2d-x/extensions/tags"]]
+let g:ProjTags += [[ "~/workspace/opencv","~/vimfiles/tags/opencv/tags" ]]
 "}}}
 
 " configure for DoxygenToolkit plugin {{{
@@ -279,24 +276,15 @@ autocmd! bufread  *.* :cd %:p:h
 
 " add cpp11 syntax support {{{
 let g:syntastic_cpp_compiler_options = ' -std=c++11'
-"run cpp11 code"
-if !has("win32")
-nmap <leader>rr :<C-U>!clang++ -std=c++11 -stdlib=libc++ -nostdinc++ -I/usr/local/src/llvm/tools/libcxx/include -L/usr/local/src/llvm/tools/libcxx/lib -o %:r % && ./%:r <cr>
-endif
 
-if has("win32") || has("win64")
 nmap <leader>rr :<C-U>!clang++ -std=c++11 -stdlib=libc++ -nostdinc++
             \ -IC:/MinGW/include
             \ -IC:/MinGW/lib
             \ -IC:/MinGW/lib/gcc/mingw32/4.6.2/include/c++
             \ -IC:/MinGW/lib/gcc/mingw32/4.6.2/include/c++/mingw32
             \ -o %:r % && %:r <cr>
-endif
 
-if has("win32") || has("win64")
-    " fix cygwin shell redirection
-    set shellredir=>\"%s\"\ 2>&1
-endif    
+set shellredir=>\"%s\"\ 2>&1
 
 "}}}
 
@@ -406,11 +394,7 @@ let g:SuperTabDefaultCompletionType='<c-x><c-u><c-p>'
 
 
 " Set the most common used run command
-if has('win32') || has('win64') || has('os2')
-    let g:common_run_command='$(FILE_TITLE)$'
-else
-    let g:common_run_command='./$(FILE_TITLE)$'
-endif
+let g:common_run_command='$(FILE_TITLE)$'
  
 " SingleCompile for C++ with Clang
 function! s:LoadSingleCompileOptions()
@@ -474,7 +458,7 @@ inoremap <C-t>     <Esc> :tabnew<CR>
 
 "configs for vimwiki"{{{
 nmap <leader>5 :VimwikiAll2HTML<cr>
-let g:vimwiki_list = [{'path': '/Users/andyque/workspace/myblog/octopress/source/vimwiki/',  
-  \ 'path_html': '/Users/andyque/workspace/myblog/octopress/source/vimwiki_html/'}]
+let g:vimwiki_list = [{'path': 'c:/Users/andyque/workspace/myblog/octopress/source/vimwiki/',  
+            \ 'path_html': 'c:/Users/andyque/workspace/myblog/octopress/source/vimwiki_html/'}]
 "}}}
 
