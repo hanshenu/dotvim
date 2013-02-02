@@ -157,6 +157,3 @@
 [submodule "bundle/vim-nerdtree-tabs"]
 	path = bundle/vim-nerdtree-tabs
 	url = https://github.com/jistr/vim-nerdtree-tabs.git
-[submodule "bundle\\vim-clangComplete"]
-	path = bundle\\vim-clangComplete
-	url = https://github.com/Rip-Rip/clang_complete.git

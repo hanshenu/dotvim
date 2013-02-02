@@ -383,8 +383,6 @@ nmap <leader>vv :tabedit $MYVIMRC<CR>
 
 
 "config clang_complete library {{{
-" g:clang_user_options set at vimprj section
-au FileType cpp,objcpp set syntax=cpp11
 au BufNewFile,BufRead *
 \ if expand('%:e') =~ '^\(h\|hh\|hxx\|hpp\|ii\|ixx\|ipp\|inl\|txx\|tpp\|tpl\|cc\|cxx\|cpp\)$' |
 \   if &ft != 'cpp'                                                                           |
@@ -396,7 +394,7 @@ let g:clang_use_library=1
 
 if has("win32")
     let g:clang_exec = 'C:\Program Files (x86)\llvm\bin\clang.exe'
-    let g:clang_library_path="c:/clanglib"
+    let g:clang_library_path = 'C:\Program Files (x86)\llvm\bin\'
 endif
 
 
@@ -445,11 +443,10 @@ noremap! <silent> <F10> <c-o>:SCCompileRun<cr>
 "config for neocomplcache{{{
 " use neocomplcache & clang_complete
 
-" add neocomplcache option
 let g:neocomplcache_force_overwrite_completefunc=1
 
 " add clang_complete option
-let g:clang_complete_auto=1
+" let g:clang_complete_auto=1
 " Disable AutoComplPop. Comment out this line if AutoComplPop is not installed.
 let g:acp_enableAtStartup = 0
 " Launches neocomplcache automatically on vim startup.
