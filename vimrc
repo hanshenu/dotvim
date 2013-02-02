@@ -392,9 +392,7 @@ au BufNewFile,BufRead *
 \   endif                                                                                     |
 \ endif   
 
-if !has("win32")
-    let g:clang_use_library=1
-endif
+let g:clang_use_library=1
 let g:clang_complete_copen=1
 let g:clang_complete_macros=1
 let g:clang_complete_patterns=0
@@ -404,19 +402,13 @@ let g:clang_memory_percent=70
 
 if has("win32")
     let g:clang_exec = 'C:\Program Files (x86)\llvm\bin\clang.exe'
+    let g:clang_library_path="c:/clanglib"
 endif
-
-
-if has("win32") || has("win64")
-let g:clang_library_path="c:"
-endif
-
 
 set conceallevel=2
 set concealcursor=vin
 let g:clang_snippets=1
 let g:clang_conceal_snippets=1
-" The single one that works with clang_complete
 let g:clang_snippets_engine='clang_complete'
 
 " Complete options (disable preview scratch window, longest removed to aways
@@ -432,11 +424,6 @@ let g:SuperTabDefaultCompletionType='<c-x><c-u><c-p>'
 
 
 
-"keymaps for c/c++ development{{{
-" Reparse the current translation unit in background
-command! Parse  call g:ClangBackgroundParse()  
-" Reparse the current translation unit and check for errors
-command! ClangCheck call g:ClangUpdateQuickFix()  
 
 " Set the most common used run command
 if has('win32') || has('win64') || has('os2')
@@ -465,12 +452,8 @@ function! s:LoadSingleCompileOptions()
     call SingleCompile#ChooseCompiler('cpp', 'clang')
 endfunction
 
-noremap  <silent> <F7> :Parse<cr>
-noremap  <silent> <F8> :ClangCheck<cr>
 noremap  <silent> <F9> :SCCompile<cr>
 noremap  <silent> <F10> :SCCompileRun<cr>
-noremap! <silent> <F7> <c-o>:Parse<cr>
-noremap! <silent> <F8> <c-o>:ClangCheck<cr>
 noremap! <silent> <F9> <c-o>:SCCompile<cr>
 noremap! <silent> <F10> <c-o>:SCCompileRun<cr>
 "}}}
