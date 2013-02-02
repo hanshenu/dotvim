@@ -393,30 +393,12 @@ au BufNewFile,BufRead *
 \ endif   
 
 let g:clang_use_library=1
-let g:clang_complete_copen=1
-let g:clang_complete_macros=1
-let g:clang_complete_patterns=0
-" Avoids lame path cache generation and other unknown sources for includes 
-let g:clang_auto_user_options=''
-let g:clang_memory_percent=70
 
 if has("win32")
     let g:clang_exec = 'C:\Program Files (x86)\llvm\bin\clang.exe'
     let g:clang_library_path="c:/clanglib"
 endif
 
-set conceallevel=2
-set concealcursor=vin
-let g:clang_snippets=1
-let g:clang_conceal_snippets=1
-let g:clang_snippets_engine='clang_complete'
-
-" Complete options (disable preview scratch window, longest removed to aways
-" show menu)
-set completeopt=menu,menuone
-
-" Limit popup menu height
-set pumheight=20
 
 " SuperTab completion fall-back 
 let g:SuperTabDefaultCompletionType='<c-x><c-u><c-p>'
@@ -458,38 +440,6 @@ noremap! <silent> <F9> <c-o>:SCCompile<cr>
 noremap! <silent> <F10> <c-o>:SCCompileRun<cr>
 "}}}
 
-"Config for SimpleCompile plugin {{{
-" SingleCompile for C++ with Clang
-" vimprj configuration
-au BufNewFile,BufRead *.vimprj set ft=vim
-
- 
-" Initialize vimprj plugin
-call vimprj#init()
- 
-" vimprj hooks
- 
-" Called BEFORE sourcing .vimprj and when not sourcing
-function! g:vimprj#dHooks['SetDefaultOptions']['main_options'](dParams)
-    let g:vimprj_dir = substitute(a:dParams['sVimprjDirName'], '[/\\]\.vimprj$', '', '')
-    if &ft == 'c' || &ft == 'cpp'  
-        let g:clang_user_options = ''
-        if &ft == 'cpp'
-            let g:clang_user_options = '-std=c++11 -stdlib=libc++ '
-        endif
-        let g:single_compile_options = '-O3 ' . g:clang_user_options
-    endif
-endfunction
- 
-" Called AFTER sourcing .vimprj and when not sourcing
-function! g:vimprj#dHooks['OnAfterSourcingVimprj']['main_options'](dParams)
-    unlet g:vimprj_dir
-    if &ft == 'c' || &ft == 'cpp'  
-      call g:ClangBackgroundParse()
-      call s:LoadSingleCompileOptions()
-    endif                          
-endfunction
-"}}}
 
 
 "config for neocomplcache{{{
