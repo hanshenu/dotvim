@@ -357,7 +357,7 @@ function! MyFoldText()
 
     let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
     let fillcharcount = windowwidth - len(line) - len(foldedlinecount) - 4
-    return line . ' â€¦' . repeat(" ",fillcharcount) . foldedlinecount . ' '
+    return line . ' ¡­' . repeat(" ",fillcharcount) . foldedlinecount . ' '
 endfunction
 set foldtext=MyFoldText()
 
@@ -392,13 +392,20 @@ au BufNewFile,BufRead *
 \   endif                                                                                     |
 \ endif   
 
-let g:clang_use_library=1
+if !has("win32")
+    let g:clang_use_library=1
+endif
 let g:clang_complete_copen=1
 let g:clang_complete_macros=1
 let g:clang_complete_patterns=0
 " Avoids lame path cache generation and other unknown sources for includes 
 let g:clang_auto_user_options=''
 let g:clang_memory_percent=70
+
+if has("win32")
+    let g:clang_exec = 'C:\Program Files (x86)\llvm\bin\clang.exe'
+endif
+
 
 if has("win32") || has("win64")
 let g:clang_library_path="c:"

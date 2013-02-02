@@ -14,6 +14,12 @@ let g:clang_user_options .= s:local_include_option
 let g:single_compile_options .= s:local_include_option
 endsnippet
 
+snippet wincpp "win cpp clang" !b
+let s:local_include_option = "-IC:/MinGW/include -IC:/MinGW/lib -IC:/MinGW/lib/gcc/mingw32/4.6.2/include/c++ -IC:/MinGW/lib/gcc/mingw32/4.6.2/include/c++/mingw32"
+let g:clang_user_options .= s:local_include_option
+let g:single_compile_options .= s:local_include_option
+endsnippet
+
 snippet cocos2dxb "generate cocos2dx" !b
 let s:local_include_option = " -I../libs/cocos2dx/include -I../libs/cocos2dx/kazmath/include -I../libs/cocos2dx -I../libs/CocosDenshion/include -I../usr/include/libxml2  -I../libs/cocos2dx/platform/third_party/ios -I../libs/cocos2dx/platform/ios -I../libs -I../libs/Box2D"
 let s:local_include_option .= " -I/usr/local/src/llvm/tools/libcxx/include -L/usr/local/src/llvm/tools/libcxx/lib"
