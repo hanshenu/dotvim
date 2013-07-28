@@ -129,7 +129,7 @@
     ignore = dirty
 [submodule "bundle/dfrank_util"]
 	path = bundle/dfrank_util
-	url = git://github.com/oblitum/dfrank_util.git
+	url = git://github.com/hanshenu/dfrank_util.git
 [submodule "bundle/vimprj"]
 	path = bundle/vimprj
 	url = git://github.com/oblitum/vimprj.git
