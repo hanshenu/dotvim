@@ -132,7 +132,7 @@
 	url = git://github.com/hanshenu/dfrank_util.git
 [submodule "bundle/vimprj"]
 	path = bundle/vimprj
-	url = git://github.com/oblitum/vimprj.git
+	url = git://github.com/vim-scripts/vimprj.git
 [submodule "bundle/SingleCompile"]
 	path = bundle/SingleCompile
 	url = git://github.com/xuhdev/SingleCompile.git
