@@ -127,16 +127,9 @@
 [submodule "bundle/dfrank_util"]
 	path = bundle/dfrank_util
 	url = git://github.com/hanshenu/dfrank_util.git
-[submodule "bundle/vimprj"]
-	path = bundle/vimprj
-	url = git://github.com/vim-scripts/vimprj.git
 [submodule "bundle/SingleCompile"]
 	path = bundle/SingleCompile
 	url = git://github.com/xuhdev/SingleCompile.git
-    ignore = dirty
-[submodule "bundle/clangComplete"]
-	path = bundle/clangComplete
-	url = git://github.com/Rip-Rip/clang_complete.git
     ignore = dirty
 [submodule "bundle/bufkill"]
 	path = bundle/bufkill
@@ -194,3 +187,9 @@
 [submodule "bundle/vim-coffee-script"]
 	path = bundle/vim-coffee-script
 	url = https://github.com/kchmck/vim-coffee-script.git
+[submodule "bundle/vimprj"]
+	path = bundle/vimprj
+	url = git://github.com/vim-scripts/vimprj.git
+[submodule "bundle/clangComplete"]
+	path = bundle/clangComplete
+	url = git://github.com/Rip-Rip/clang_complete.git
