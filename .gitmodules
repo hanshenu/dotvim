@@ -139,7 +139,7 @@
     ignore = dirty
 [submodule "bundle/clangComplete"]
 	path = bundle/clangComplete
-	url = git://github.com/oblitum/clang_complete.git
+	url = git://github.com/Rip-Rip/clang_complete.git
     ignore = dirty
 [submodule "bundle/bufkill"]
 	path = bundle/bufkill
