@@ -1,5 +1,5 @@
 " VIM Configuration File
-" Author: guanghui qu 
+" Author: hanshenu
 "
 " load plugins that ship with Vim {{{
 set nocompatible
@@ -7,6 +7,7 @@ filetype on
 runtime macros/matchit.vim
 runtime ftplugin/man.vim
 "}}}
+
 
 
 "--vim-pathogen {{{
@@ -104,14 +105,13 @@ let g:DoxygenToolkit_paramTag_pre="@param "
 let g:DoxygenToolkit_returnTag="@Returns "
 let g:DoxygenToolkit_blockHeader="--------------------------------------------------------------------------"
 let g:DoxygenToolkit_blockFooter="----------------------------------------------------------------------------"
-let g:DoxygenToolkit_authorName="guanghui.qu <guanghui8827@126.com>"
-let g:DoxygenToolkit_licenseTag="MIT License"
+let g:DoxygenToolkit_authorName="hanshenu@gmail.com"
+let g:DoxygenToolkit_licenseTag="..."
 "create doxygen comment
 map <leader>dd :Dox<CR>
 map <leader>da :DoxAuthor<Cr>
 map <leader>dl :DoxLic<cr>
 "}}}
-
 
 
 "plugins key maps" {{{
@@ -125,7 +125,7 @@ nmap <silent> <leader>ta :TagbarToggle <CR>
 let g:buffergator_suppress_keymaps = 1
 
 "config for ZoomWin plugin map
-nmap <silent>,o :ZoomWin <cr>
+nmap <silent> <leader>o :ZoomWin <cr>
 
 "config for BufferNavigator"
 nmap <leader>bf :BufExplorer<cr>
@@ -135,6 +135,7 @@ nmap <leader>bf :BufExplorer<cr>
 autocmd vimenter * NERDTree
 nmap <silent> <leader>n :NERDTreeToggle <CR>
 let NERDTreeShowHidden=1
+let NERDTreeWinSize=40
 " bufkill bd's: really do not mess with NERDTree buffer
 nnoremap <silent> <backspace> :BD<cr>
 nnoremap <silent> <s-backspace> :BD!<cr>
@@ -155,9 +156,6 @@ nnoremap <leader>b <C-o>
 " au BufWinEnter * silent! loadview
 "}}}
 
-"map markdown to html {{{
-nmap <leader>md :%!/usr/local/bin/Markdown.pl --html4tags <cr>
-"}}}
 
 "map leader 1 for display cursorline {{{
 :nnoremap <Leader>1 :set cursorline! cursorcolumn!<CR>
@@ -173,18 +171,20 @@ nmap ,c <c-w>c
 nmap ,<tab> <c-w><c-w>
 nnoremap j gj
 nnoremap k gk
-nmap <leader>d <c-D>
-nmap <leader>u <c-U>
+" nmap <leader>d <c-D>
+" nmap <leader>u <c-U>
 "}}}
 
 "config syntastic {{{
 let g:syntastic_check_on_open=1
+let g:syntastic_error_symbol='✗'
+let g:syntastic_warning_symbol='⚠'
 "}}}
 
 
 "set colorscheme {{{
 syntax enable
-colorscheme blackboard
+colorscheme mustang
 if has("gui_running")
     colorscheme solarized
 endif
@@ -240,26 +240,6 @@ map <leader>er :e <C-R>=expand("%:r")."."<CR>
 "}}}
 
 
-"configure for running opencv {{{
-if !has("win32")
-    " add command to complie opencv program"
-    nnoremap <silent><leader>2 : call Compilerunopencv()<cr>
-
-    function! Compilerunopencv()
-        let IncDir = "/usr/local/include"
-        let LibDir = "/usr/local/lib"
-        let Libs   = "-lopencv_core -lopencv_highgui -lopencv_imgproc"
-        exec "w"
-        exec "lcd %:p:h"
-        exec "r !g++ -I" . IncDir . " -L" . LibDir . " *.cpp " . Libs . " -o %< " 
-        echo "compile finished!"
-        exec "!./%<"
-    endfunction
-endif
-"}}}
-
-
-
 " Generate tags on save. Note that this regenerates tags for all files in current folder {{{
 function! GenerateTagsFile()
     exec ":!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
@@ -287,19 +267,6 @@ if !has("win32")
 nmap <leader>rr :<C-U>!clang++ -std=c++11 -stdlib=libc++ -nostdinc++ -I/usr/local/src/llvm/tools/libcxx/include -L/usr/local/src/llvm/tools/libcxx/lib -o %:r % && ./%:r <cr>
 endif
 
-if has("win32") || has("win64")
-nmap <leader>rr :<C-U>!clang++ -std=c++11 -stdlib=libc++ -nostdinc++
-            \ -IC:/MinGW/include
-            \ -IC:/MinGW/lib
-            \ -IC:/MinGW/lib/gcc/mingw32/4.6.2/include/c++
-            \ -IC:/MinGW/lib/gcc/mingw32/4.6.2/include/c++/mingw32
-            \ -o %:r % && %:r <cr>
-endif
-
-if has("win32") || has("win64")
-    " fix cygwin shell redirection
-    set shellredir=>\"%s\"\ 2>&1
-endif    
 
 "}}}
 
@@ -360,7 +327,7 @@ function! MyFoldText()
 
     let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
     let fillcharcount = windowwidth - len(line) - len(foldedlinecount) - 4
-    return line . ' …' . repeat(" ",fillcharcount) . foldedlinecount . ' '
+    return line . '...' . repeat(" ",fillcharcount) . foldedlinecount . ' '
 endfunction
 set foldtext=MyFoldText()
 
@@ -396,16 +363,15 @@ au BufNewFile,BufRead *
 \ endif   
 
 let g:clang_use_library=1
+let g:clang_library_path="/usr/lib/"
 let g:clang_complete_copen=1
 let g:clang_complete_macros=1
 let g:clang_complete_patterns=0
 " Avoids lame path cache generation and other unknown sources for includes 
-let g:clang_auto_user_options=''
+" let g:clang_auto_user_options=''
 let g:clang_memory_percent=70
+let g:clang_debug=1
 
-if has("win32") || has("win64")
-let g:clang_library_path="c:"
-endif
 
 
 set conceallevel=2
@@ -430,7 +396,7 @@ let g:SuperTabDefaultCompletionType='<c-x><c-u><c-p>'
 
 "keymaps for c/c++ development{{{
 " Reparse the current translation unit in background
-command! Parse  call g:ClangBackgroundParse()  
+" command! Parse  call g:ClangBackgroundParse()  
 " Reparse the current translation unit and check for errors
 command! ClangCheck call g:ClangUpdateQuickFix()  
 
@@ -486,9 +452,9 @@ call vimprj#init()
 function! g:vimprj#dHooks['SetDefaultOptions']['main_options'](dParams)
     let g:vimprj_dir = substitute(a:dParams['sVimprjDirName'], '[/\\]\.vimprj$', '', '')
     if &ft == 'c' || &ft == 'cpp'  
-        let g:clang_user_options = ''
+        " let g:clang_user_options = ''
         if &ft == 'cpp'
-            let g:clang_user_options = '-std=c++11 -stdlib=libc++ '
+            " let g:clang_user_options = '-std=c++11 -stdlib=libc++ '
         endif
         let g:single_compile_options = '-O3 ' . g:clang_user_options
     endif
@@ -498,7 +464,7 @@ endfunction
 function! g:vimprj#dHooks['OnAfterSourcingVimprj']['main_options'](dParams)
     unlet g:vimprj_dir
     if &ft == 'c' || &ft == 'cpp'  
-      call g:ClangBackgroundParse()
+      " call g:ClangBackgroundParse()
       call s:LoadSingleCompileOptions()
     endif                          
 endfunction
@@ -527,8 +493,19 @@ let g:neocomplcache_enable_underbar_completion = 1
 let g:neocomplcache_min_syntax_length = 3
 "}}}
 
+if !exists('g:neocomplcache_force_omni_patterns')
+  let g:neocomplcache_force_omni_patterns = {}
+endif
+  let g:neocomplcache_force_overwrite_completefunc = 1
+  let g:neocomplcache_force_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+  let g:neocomplcache_force_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+  let g:neocomplcache_force_omni_patterns.objc = '[^.[:digit:] *\t]\%(\.\|->\)'
+  let g:neocomplcache_force_omni_patterns.objcpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+  let g:clang_complete_auto = 0
+  let g:clang_auto_select = 0
+
 "some abbreviates for myself {{{
-abbreviate zl zilongshanren
+abbreviate lss lishuai
 "}}}
 
 " tab navigation like firefox{{{
@@ -583,3 +560,27 @@ endfunction
 nmap _$ :call Preserve("%s/\\s\\+$//e")<CR>
 nmap _= :call Preserve("normal gg=G")<CR>
 "}}}
+
+nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+"velocity
+au BufNewFile,BufRead *.vm,*.html,*.htm,*.shtml,*.stm set ft=velocity
+
+
+
+"indent-guide
+" let g:indent_guides_guide_size=1
+" hi IndentGuidesEven ctermbg=darkgrey 
+" hi IndentGuidesEven ctermbg=black
+" hi IndentGuidesOdd  ctermbg=black 
+
+
+"
+xnoremap p pgvy

@@ -3,6 +3,7 @@
 	email = hanshenu@gmail.com
 [mergetool]
 	keepBackup = true
+	prompt = false
 [alias]
 	cm = commit
 	br = branch
@@ -16,3 +17,9 @@
     ui = true
 [core]
     editor = vim
+[merge]
+	tool = vimdiff
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = No
