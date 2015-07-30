@@ -163,10 +163,10 @@ nnoremap <leader>b <C-o>
 
 
 "map windows command {{{
-nmap ,j <c-w>j
-nmap ,k <c-w>k
-nmap ,h <c-w>h
-nmap ,l <c-w>l
+nmap <c-j> <c-w>j
+nmap <c-k> <c-w>k
+nmap <c-h> <c-w>h
+nmap <c-l> <c-w>l
 nmap ,c <c-w>c
 nmap ,<tab> <c-w><c-w>
 nnoremap j gj
