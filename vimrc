@@ -4,6 +4,20 @@
 " load plugins that ship with Vim {{{
 set nocompatible
 filetype on
+
+
+
+"let vundle manage vbundle
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+source ~/.vim/bundles.vim
+
+filetype plugin indent on
+
+
+
+
 runtime macros/matchit.vim
 runtime ftplugin/man.vim
 "}}}
