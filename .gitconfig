@@ -4,15 +4,6 @@
 [mergetool]
 	keepBackup = true
 	prompt = false
-[alias]
-	cm = commit
-	br = branch
-    st = status
-    co = checkout
-    sm = submodule
-    ci = commit -a -v
-    throw = reset --hard HEAD
-    throwh = reset --hard HEAD^
 [color]
     ui = true
 [core]
