@@ -1,2 +1,0 @@
-nnoremap ,a :nc<cr>
-inoremap ,a :nc<cr>
