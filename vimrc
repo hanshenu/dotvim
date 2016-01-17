@@ -5,8 +5,6 @@
 set nocompatible
 filetype on
 
-
-
 "let vundle manage vbundle
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
@@ -14,22 +12,7 @@ call vundle#rc()
 source ~/.vim/bundles.vim
 
 filetype plugin indent on
-
-
-
-
-runtime macros/matchit.vim
-runtime ftplugin/man.vim
-"}}}
-
-
-
-"--vim-pathogen {{{
-filetype plugin indent on
 filetype plugin on
-call pathogen#infect()
-call pathogen#helptags()
-"}}}
 
 " Disable swapfile and backup {{{
 set nobackup
@@ -75,12 +58,6 @@ set nolist
 syntax on
 "}}}
 
-"Tab-completion in command-line mode{{{
-set wildmenu
-set wildmode=longest:full
-set wildignore=*.pdf
-"}}}
-
 
 "search" {{{
 set incsearch
@@ -113,33 +90,14 @@ let g:ProjTags += [["~/workspace/cocos2d-x","~/.vim/tags/cocos2d-x/cocos2dx/tags
 let g:ProjTags += [[ "~/workspace/opencv","~/.vim/tags/opencv/tags" ]]
 "}}}
 
-" configure for DoxygenToolkit plugin {{{
-let g:DoxygenToolkit_briefTag_pre="@brief "
-let g:DoxygenToolkit_paramTag_pre="@param "
-let g:DoxygenToolkit_returnTag="@Returns "
-let g:DoxygenToolkit_blockHeader="--------------------------------------------------------------------------"
-let g:DoxygenToolkit_blockFooter="----------------------------------------------------------------------------"
-let g:DoxygenToolkit_authorName="hanshenu@gmail.com"
-let g:DoxygenToolkit_licenseTag="..."
-"create doxygen comment
-map <leader>dd :Dox<CR>
-map <leader>da :DoxAuthor<Cr>
-map <leader>dl :DoxLic<cr>
-"}}}
-
 
 "plugins key maps" {{{
 "--commentary plugin,comment a line
 map <leader>/ \\\
-"go back and forth from header file and source file
-nmap <silent> <leader>f :A<cr>
 "open a tag list ivew
 nmap <silent> <leader>ta :TagbarToggle <CR>
 "disable default buffergator keymaps"
 let g:buffergator_suppress_keymaps = 1
-
-"config for ZoomWin plugin map
-nmap <silent> <leader>o :ZoomWin <cr>
 
 "config for BufferNavigator"
 nmap <leader>bf :BufExplorer<cr>
@@ -150,24 +108,11 @@ autocmd vimenter * NERDTree
 nmap <silent> <leader>n :NERDTreeToggle <CR>
 let NERDTreeShowHidden=1
 let NERDTreeWinSize=40
-" bufkill bd's: really do not mess with NERDTree buffer
-nnoremap <silent> <backspace> :BD<cr>
-nnoremap <silent> <s-backspace> :BD!<cr>
 
-" Prevent :bd inside NERDTree buffer
-au FileType nerdtree cnoreabbrev <buffer> bd <nop>
-au FileType nerdtree cnoreabbrev <buffer> BD <nop>
-"}}}
 
 "better tag navigation from www.vimbits.com {{{
 nnoremap <Return> <C-]>
 nnoremap <leader>b <C-o>
-"}}}
-
-
-"automatically save foldings in vim{{{
-" au BufWinLeave * silent! mkview
-" au BufWinEnter * silent! loadview
 "}}}
 
 
@@ -238,10 +183,6 @@ nmap <silent> <leader>s :set spell!<CR>
 set spelllang=en_gb
 "}}}
 
-" map Gundo plugin toggle {{{
-nnoremap <leader>U ::GundoToggle<CR>
-"}}}
-
 
 "command line editing key maps {{{
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
@@ -253,72 +194,12 @@ map <leader>et :tabe %%
 map <leader>er :e <C-R>=expand("%:r")."."<CR>
 "}}}
 
-
-" Generate tags on save. Note that this regenerates tags for all files in current folder {{{
-function! GenerateTagsFile()
-    exec ":!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
-endfunction
-
-function! GenerateJsTags()
-    exec ":!jsctags ."
-endfunction
-
-nnoremap <leader>8   :call GenerateTagsFile() <cr>
-nnoremap <leader>9   :call GenerateJsTags() <cr>
-"}}}
-
-" Always change to directory of the buffer currently in focus {{{
-" autocmd! bufenter *.* :cd %:p:h
-" autocmd! bufread  *.* :cd %:p:h
-"}}}
-
-
-
 " add cpp11 syntax support {{{
 let g:syntastic_cpp_compiler_options = ' -std=c++11'
 "run cpp11 code"
 if !has("win32")
 nmap <leader>rr :<C-U>!clang++ -std=c++11 -stdlib=libc++ -nostdinc++ -I/usr/local/src/llvm/tools/libcxx/include -L/usr/local/src/llvm/tools/libcxx/lib -o %:r % && ./%:r <cr>
 endif
-
-
-"}}}
-
-"add octrpress publish blog key mappings {{{
-nmap ,3 :!rake generate <cr>
-nmap ,4 :!rake deploy <cr>
-"}}}
-
-" Better navigating through omnicomplete option list {{{
-" See http://stackoverflow.com/questions/2170023/how-to-map-keys-for-popup-menu-in-vim
-set completeopt=longest,menuone
-function! OmniPopup(action)
-    if pumvisible()
-        if a:action == 'j'
-            return "\<C-N>"
-        elseif a:action == 'k'
-            return "\<C-P>"
-        endif
-    endif
-    return a:action
-endfunction
-
-inoremap <silent><C-j> <C-R>=OmniPopup('j')<CR>
-inoremap <silent><C-k> <C-R>=OmniPopup('k')<CR>
-"}}}
-
-" Settings for python-mode {{{
-" cd ~/.vim/bundle
-" git clone https://github.com/klen/python-mode
-map <Leader>g :call RopeGotoDefinition()<CR>
-let ropevim_enable_shortcuts = 1
-let g:pymode_rope_goto_def_newwin = "vnew"
-let g:pymode_rope_extended_complete = 1
-let g:pymode_breakpoint = 0
-let g:pymode_syntax = 1
-let g:pymode_syntax_builtin_objs = 0
-let g:pymode_syntax_builtin_funcs = 0
-" map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-c>
 "}}}
 
 " Folding rules {{{
@@ -386,8 +267,6 @@ let g:clang_complete_patterns=0
 let g:clang_memory_percent=70
 let g:clang_debug=1
 
-
-
 set conceallevel=2
 set concealcursor=vin
 let g:clang_snippets=1
@@ -406,8 +285,6 @@ set pumheight=20
 let g:SuperTabDefaultCompletionType='<c-x><c-u><c-p>'
 "}}}
 
-
-
 "keymaps for c/c++ development{{{
 " Reparse the current translation unit in background
 " command! Parse  call g:ClangBackgroundParse()  
@@ -421,26 +298,6 @@ else
     let g:common_run_command='./$(FILE_TITLE)$'
 endif
  
-" SingleCompile for C++ with Clang
-function! s:LoadSingleCompileOptions()
-    call SingleCompile#SetCompilerTemplate('c', 
-                \'clang', 
-                \'the Clang C and Objective-C compiler', 
-                \'clang', 
-                \'-o $(FILE_TITLE)$ ' . g:single_compile_options, 
-                \g:common_run_command)
- 
-    call SingleCompile#ChooseCompiler('c', 'clang')
- 
-    call SingleCompile#SetCompilerTemplate('cpp', 
-                \'clang', 
-                \'the Clang C and Objective-C compiler', 
-                \'clang++', 
-                \'-o $(FILE_TITLE)$ ' . g:single_compile_options, 
-                \g:common_run_command)
-    call SingleCompile#ChooseCompiler('cpp', 'clang')
-endfunction
-
 noremap  <silent> <F7> :Parse<cr>
 noremap  <silent> <F8> :ClangCheck<cr>
 noremap  <silent> <F9> :SCCompile<cr>
@@ -451,112 +308,13 @@ noremap! <silent> <F9> <c-o>:SCCompile<cr>
 noremap! <silent> <F10> <c-o>:SCCompileRun<cr>
 "}}}
 
-"Config for SimpleCompile plugin {{{
-" SingleCompile for C++ with Clang
-" vimprj configuration
-au BufNewFile,BufRead *.vimprj set ft=vim
-
  
 " Initialize vimprj plugin
 call vimprj#init()
- 
-" vimprj hooks
- 
-" Called BEFORE sourcing .vimprj and when not sourcing
-function! g:vimprj#dHooks['SetDefaultOptions']['main_options'](dParams)
-    let g:vimprj_dir = substitute(a:dParams['sVimprjDirName'], '[/\\]\.vimprj$', '', '')
-    if &ft == 'c' || &ft == 'cpp'  
-        " let g:clang_user_options = ''
-        if &ft == 'cpp'
-            " let g:clang_user_options = '-std=c++11 -stdlib=libc++ '
-        endif
-        let g:single_compile_options = '-O3 ' . g:clang_user_options
-    endif
-endfunction
- 
-" Called AFTER sourcing .vimprj and when not sourcing
-function! g:vimprj#dHooks['OnAfterSourcingVimprj']['main_options'](dParams)
-    unlet g:vimprj_dir
-    if &ft == 'c' || &ft == 'cpp'  
-      " call g:ClangBackgroundParse()
-      call s:LoadSingleCompileOptions()
-    endif                          
-endfunction
-"}}}
-
-
-"config for neocomplcache{{{
-" use neocomplcache & clang_complete
-
-" add neocomplcache option
-let g:neocomplcache_force_overwrite_completefunc=1
-
-" add clang_complete option
-let g:clang_complete_auto=1
-" Disable AutoComplPop. Comment out this line if AutoComplPop is not installed.
-let g:acp_enableAtStartup = 0
-" Launches neocomplcache automatically on vim startup.
-let g:neocomplcache_enable_at_startup = 1
-" Use smartcase.
-let g:neocomplcache_enable_smart_case = 1
-" Use camel case completion.
-let g:neocomplcache_enable_camel_case_completion = 1
-" Use underscore completion.
-let g:neocomplcache_enable_underbar_completion = 1
-" Sets minimum char length of syntax keyword.
-let g:neocomplcache_min_syntax_length = 3
-"}}}
-
-if !exists('g:neocomplcache_force_omni_patterns')
-  let g:neocomplcache_force_omni_patterns = {}
-endif
-  let g:neocomplcache_force_overwrite_completefunc = 1
-  let g:neocomplcache_force_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-  let g:neocomplcache_force_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-  let g:neocomplcache_force_omni_patterns.objc = '[^.[:digit:] *\t]\%(\.\|->\)'
-  let g:neocomplcache_force_omni_patterns.objcpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-  let g:clang_complete_auto = 0
-  let g:clang_auto_select = 0
-
-"some abbreviates for myself {{{
-abbreviate lss lishuai
-"}}}
-
-" tab navigation like firefox{{{
-nnoremap <leader><tab> :tabnext<CR>
-nnoremap <C-t>     :tabnew<CR>
-inoremap <leader><tab>   <Esc>:tabnext<CR>i
-inoremap <C-t>     <Esc> :tabnew<CR>
-"}}}
-
-"configs for vimwiki"{{{
-nmap <leader>5 :VimwikiAll2HTML<cr>
-let g:vimwiki_list = [{'path': '/Users/andyque/workspace/myblog/octopress/source/vimwiki/',  
-  \ 'path_html': '/Users/andyque/workspace/myblog/octopress/source/vimwiki_html/'}]
-"}}}
-
-"keymaping for HardMode plugin {{{
-" autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
-nnoremap <leader>ha <Esc>:call ToggleHardMode()<CR>
-"}}}
-
-"emacs keymaping for insert mode cursor movement{{{
-inoremap <c-a> <esc>I
-inoremap <c-e> <esc>A
-inoremap <c-f> <right>
-inoremap <c-b> <left>
-inoremap <C-d> <Esc>lxi
-"}}}
 
 "delimitMate mappings{{{
 let delimitMate_matchpairs = "(:),[:],{:},<:>"
 au FileType cpp let b:delimitMate_matchpairs = "(:),[:],{:}"
-"}}}
-
-"mappings for latex-box plugin{{{
-map <silent> <Leader>ls :silent !/Applications/Skim.app/Contents/SharedSupport/displayline
-            \ <C-R>=line('.')<CR> "<C-R>=LatexBox_GetOutputFile()<CR>" "%:p" <CR>
-autocmd filetype tex nnoremap F10 :!latexmk -pdf % 
 "}}}
 
 "some keymapings for tidying your whitespace{{{
@@ -587,14 +345,4 @@ nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 "velocity
 au BufNewFile,BufRead *.vm,*.html,*.htm,*.shtml,*.stm set ft=velocity
 
-
-
-"indent-guide
-" let g:indent_guides_guide_size=1
-" hi IndentGuidesEven ctermbg=darkgrey 
-" hi IndentGuidesEven ctermbg=black
-" hi IndentGuidesOdd  ctermbg=black 
-
-
-"
 xnoremap p pgvy
