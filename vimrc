@@ -24,7 +24,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 " View
-Plug 'Yggdroot/indentLine'
+"Plug 'Yggdroot/indentLine'
+Plug 'nathanaelkane/vim-indent-guides'
 
 " Linting
 Plug 'w0rp/ale'
@@ -90,9 +91,9 @@ set visualbell
 
 " Indent using four spaces
 set expandtab smarttab
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 
 set gcr=a:block-blinkon0
 
@@ -109,11 +110,16 @@ set cursorcolumn
 " {{{
 
 " ----------------------------------------------------------------------------
-" <tab> / <s-tab> | Circular windows navigation
+" color
 " ----------------------------------------------------------------------------
 
 set background=dark
-colorschem fisa 
+colorschem fisa
+
+let g:airline_powerline_fonts = 0
+let g:airline_theme = 'bubblegum'
+let g:airline#extensions#whitespace#enabled = 0
+
 
 " PLUGINS
 " {{{
@@ -126,9 +132,15 @@ let g:UltiSnipsSnippetDirectories=["mysnippets"]
 let g:UltiSnipsExpandTrigger="<leader><tab>"
 let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
 let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
-  
-let g:indentLine_char = '│'
 
+" ----------------------------------------------------------------------------
+"indent
+" ----------------------------------------------------------------------------
+
+let g:indent_guides_enable_on_vim_startup=1
+let g:indent_guides_start_level=2
+let g:indent_guides_guide_size=1
+  
 " ----------------------------------------------------------------------------
 " tarbar
 " ----------------------------------------------------------------------------
