@@ -24,8 +24,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 " View
-"Plug 'Yggdroot/indentLine'
-Plug 'nathanaelkane/vim-indent-guides'
+Plug 'Yggdroot/indentLine'
+"Plug 'nathanaelkane/vim-indent-guides'
 
 " Linting
 Plug 'w0rp/ale'
@@ -137,9 +137,10 @@ let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
 "indent
 " ----------------------------------------------------------------------------
 
-let g:indent_guides_enable_on_vim_startup=1
-let g:indent_guides_start_level=2
-let g:indent_guides_guide_size=1
+"let g:indent_guides_enable_on_vim_startup=1
+"let g:indent_guides_start_level=2
+"let g:indent_guides_guide_size=1
+let g:indentLine_char='│'
   
 " ----------------------------------------------------------------------------
 " tarbar
