@@ -211,8 +211,8 @@ let NERDTreeAutoDeleteBuffer=1
 " ctrlsf.vim
 " ----------------------------------------------------------------------------
 
-nnoremap <leader>f :CtrlSFToggle<CR>
-nnoremap <c-f> :CtrlSF<CR>
+nnoremap <leader>s :CtrlSFToggle<CR>
+nnoremap <c-s> :CtrlSF<CR>
 
 " ----------------------------------------------------------------------------
 " ctrlp.vim
