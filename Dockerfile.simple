@@ -1,0 +1,44 @@
+FROM ubuntu:18.04
+
+ADD ./apt-sources.list.ubuntu.18.04 /etc/apt/sources.list
+
+RUN apt-get update && \
+    apt-get install -y tmux gdb cmake ctags ack-grep curl wget libncurses5-dev python-dev python3-dev ruby-dev lua5.3 lua5.3-dev libperl-dev libclang-dev git
+
+RUN cd ~ && \
+    git clone --depth=1 https://github.com/vim/vim.git && \
+    cd vim && \
+    ./configure --with-features=huge \
+            --enable-multibyte \
+            --enable-rubyinterp \
+            --enable-pythoninterp \
+            --with-python-config-dir=/usr/lib/python2.7/config \
+            --enable-perlinterp \
+            --enable-luainterp \
+            --enable-cscope --prefix=/usr && \
+    make && make install
+
+
+RUN mkdir -p /root/.vim/plugged/ && \
+    cd /root/.vim/plugged/ && \
+    git clone --depth=1 https://github.com/Valloric/YouCompleteMe.git && \
+    cd YouCompleteMe && \
+    git submodule update --init --recursive 
+RUN cd /root/.vim/plugged/YouCompleteMe && \
+    ./install.py --clang-completer --system-libclang
+
+ADD tmux.conf /root/.tmux.conf
+RUN echo "alias tmux='tmux -2'" >> /root/.bashrc
+
+ADD ycm_extra_conf.py /root/.ycm_extra_conf.py
+RUN curl --insecure -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+ADD vimrc /root/.vimrc
+
+RUN echo "export LC_ALL='C.UTF-8'" >> /root/.bashrc  && \ 
+    echo "export LC_ALL='C.UTF-8'" 
+
+VOLUME ["/root/projects"]
+
+
+
