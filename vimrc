@@ -28,7 +28,7 @@ Plug 'Yggdroot/indentLine'
 "Plug 'nathanaelkane/vim-indent-guides'
 
 " Linting
-Plug 'w0rp/ale'
+"Plug 'w0rp/ale'
 
 "Plug 'Valloric/YouCompleteMe'
 
@@ -250,3 +250,14 @@ let g:ycm_cache_omnifunc=0
 let g:ycm_seed_identifiers_with_syntax=1
 
 " }}}
+
+
+" 设置环境保存项
+set sessionoptions="blank,buffers,globals,localoptions,tabpages,sesdir,folds,help,options,resize,winpos,winsize"
+" 保存 undo 历史
+set undodir=~/.undo_history/
+set undofile
+" 保存快捷键
+map <F1> :mksession! my.vim<cr> :wviminfo! my.viminfo<cr>
+" 恢复快捷键
+map <F12> :source my.vim<cr> :rviminfo my.viminfo<cr>
